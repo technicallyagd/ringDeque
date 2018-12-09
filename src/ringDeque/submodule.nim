@@ -92,3 +92,9 @@ proc popLeft*[T](dq: var RingDeque[T]): T =
   result = n.value
   dq.data.head = n.next
   dq.remove(n)
+
+proc clear*[T](dq: var RingDeque[T]) =
+  ## Removes the entire deque
+  for _ in 0..<dq.length:
+    dq.data.remove(dq.data.head)
+  dq.length = 0

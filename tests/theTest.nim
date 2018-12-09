@@ -97,3 +97,12 @@ suite "Pop and popLeft":
     let v = q.popLeft()
     check $q == "[2, 3, 4, 5]"
     check v == 1
+
+suite "clear":
+  setup:
+    var q = newDeque([1, 2, 3, 4, 5])
+
+  test "should empty the deque":
+    check $q == "[1, 2, 3, 4, 5]"
+    q.clear()
+    check $q == "[]"
