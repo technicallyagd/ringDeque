@@ -48,7 +48,7 @@ proc `[]=`*[T](dq: var RingDeque[T]; i: int; v: T) =
     n = n.next
   n.value = v
 
-proc rotate*[T](dq: var RingDeque[T]; r: int) =
+proc rotate*[T](dq: var RingDeque[T]; r = 1) =
   ## Positive = right rotation = counter clock-wise
   ## Negative = left rotation = clock-wise
   var n = dq.data.head
@@ -98,3 +98,7 @@ proc clear*[T](dq: var RingDeque[T]) =
   for _ in 0..<dq.length:
     dq.data.remove(dq.data.head)
   dq.length = 0
+
+proc count*[T](dq: RingDeque[T]; v: T): int =
+  for n in dq.data.nodes:
+    if n.value == v: result += 1

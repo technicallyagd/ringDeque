@@ -60,6 +60,11 @@ suite "rotate":
     q.rotate(-9)
     check $q == "[1, 2, 3, 4, 5]"
 
+  test "rotate input defaults to +1":
+    var q = newDeque([1, 2, 3, 4, 5])
+    q.rotate()
+    check $q == "[5, 1, 2, 3, 4]"
+
 suite "Indexing operator":
   setup:
     var q = newDeque([1, 2, 3, 4, 5])
@@ -106,3 +111,11 @@ suite "clear":
     check $q == "[1, 2, 3, 4, 5]"
     q.clear()
     check $q == "[]"
+
+suite "count":
+  setup:
+    var q = newDeque([1, 2, 3, 4, 5, 2, 4, 2])
+  test "should count number of elements ":
+    check q.count(2) == 3
+    check q.count(4) == 2
+    check q.count(99) == 0
