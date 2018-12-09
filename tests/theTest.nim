@@ -32,8 +32,12 @@ suite "newDeque":
 suite "append":
   test "should add to the right of the deque":
     var q = newDeque([1, 2, 3])
+    check q.len == 3
+
     q.append(4)
+    check q.len == 4
     check $q == "[1, 2, 3, 4]"
+
 
 suite "prepend":
   test "should add to the left of the deque":
@@ -79,3 +83,17 @@ suite "Reverse and reversed":
     let r = q.reversed()
     check $r == "[5, 4, 3, 2, 1]"
     check $q == "[1, 2, 3, 4, 5]"
+
+suite "Pop and popLeft":
+  setup:
+    var q = newDeque([1, 2, 3, 4, 5])
+
+  test "pop should remove rightmost node and return its value":
+    let v = q.pop()
+    check $q == "[1, 2, 3, 4]"
+    check v == 5
+
+  test "popLeft should remove leftmost node and return its value":
+    let v = q.popLeft()
+    check $q == "[2, 3, 4, 5]"
+    check v == 1

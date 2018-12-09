@@ -8,7 +8,6 @@ proc `$`*[T](dq: RingDeque[T]): string =
   ## turns a list into its string representation.
   $dq.data
 
-
 proc newDeque*[T](): RingDeque[T] =
   result
 
@@ -74,3 +73,22 @@ proc reversed*[T](dq: RingDeque[T]): RingDeque[T] =
   for _ in 0..<dq.length:
     result.prepend(n.value)
     n = n.next
+
+proc remove*[T](dq: var RingDeque[T]; n: DoublyLinkedNode[T]) =
+  ## Removes the given node
+  dq.length += -1
+  dq.data.remove(n)
+
+# TODO handle cases where deque is empty
+proc pop*[T](dq: var RingDeque[T]): T =
+  ## Removes the rightmost node in the list and returns its value
+  var n = dq.data.head.prev
+  result = n.value
+  dq.remove(n)
+
+proc popLeft*[T](dq: var RingDeque[T]): T =
+  ## Removes the leftmost node in the list and returns its value
+  var n = dq.data.head
+  result = n.value
+  dq.data.head = n.next
+  dq.remove(n)
