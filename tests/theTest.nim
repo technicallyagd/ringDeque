@@ -8,5 +8,11 @@
 import unittest
 
 import ringDeque
-test "can add":
-  check add(5, 5) == 10
+suite "newDeque":
+  test "should create new empty RingDeque while no argument passed":
+    let q = newDeque[bool]()
+    check q.len == 0
+  test "should create new RingDeque filled with supplied array-like data":
+    let q = newDeque([1, 2, 3])
+    check q.len == 3
+    check $q == "[1, 2, 3]"

@@ -5,6 +5,16 @@ type
     length: int
     cursor: DoublyLinkedNode[T]
 
+proc `$`*[T](dq: RingDeque[T]): string =
+  ## turns a list into its string representation.
+  result = "["
+  var n = dq.cursor
+  for _ in 0..<dq.length:
+    if result.len > 1: result.add(", ")
+    result.addQuoted(n.value)
+    n = n.next
+  result.add("]")
+
 
 proc newDeque*[T](): RingDeque[T] =
   result.cursor = result.data.head
@@ -43,3 +53,4 @@ proc rotate*[T](dq: var RingDeque[T]; r: int) =
     for _ in 0..<(-rot):
       n = n.prev
   dq.cursor = n
+
