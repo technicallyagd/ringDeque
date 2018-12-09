@@ -35,6 +35,13 @@ proc `[]`*[T](dq: RingDeque[T]; i: int): T =
     n = n.next
   n.value
 
+proc `[]`*[T](dq: var RingDeque[T]; i: int): T =
+  var n = dq.data.head
+  let moves = i mod dq.length
+  for _ in 0..<moves:
+    n = n.next
+  n.value
+
 proc `[]=`*[T](dq: var RingDeque[T]; i: int; v: T) =
   var n = dq.data.head
   let moves = i mod dq.length
@@ -55,3 +62,15 @@ proc rotate*[T](dq: var RingDeque[T]; r: int) =
       n = n.next
   dq.data.head = n
 
+proc reverse*[T](dq: var RingDeque[T]) =
+  ## Reverses the RingDeque in-place
+  for n in dq.data.nodes:
+    swap(n.prev, n.next)
+  dq.data.head = dq.data.head.next
+
+proc reversed*[T](dq: RingDeque[T]): RingDeque[T] =
+  ## Returns a reversed copy of the RingDeque
+  var n = dq.data.head
+  for _ in 0..<dq.length:
+    result.prepend(n.value)
+    n = n.next

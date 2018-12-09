@@ -66,3 +66,16 @@ suite "Indexing operator":
   test "should be able to reassign new value":
     q[3] = 122
     check q[3] == 122
+
+suite "Reverse and reversed":
+  setup:
+    var q = newDeque([1, 2, 3, 4, 5])
+
+  test "reverse should reverse the deque in-place":
+    q.reverse()
+    check $q == "[5, 4, 3, 2, 1]"
+
+  test "reversed should returned a reversed copy of the RingDeque":
+    let r = q.reversed()
+    check $r == "[5, 4, 3, 2, 1]"
+    check $q == "[1, 2, 3, 4, 5]"
