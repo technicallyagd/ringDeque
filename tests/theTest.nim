@@ -72,9 +72,15 @@ suite "Indexing operator":
   test "should fetch the value directly":
     check q[3] == 4
 
+  test "should support BackwardsIndex":
+    check q[^1] == 5
+
   test "should be able to reassign new value":
     q[3] = 122
     check q[3] == 122
+    q[^4] = 21
+    check $q == "[1, 21, 3, 122, 5]"
+
 
 suite "Reverse and reversed":
   setup:

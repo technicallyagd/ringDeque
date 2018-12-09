@@ -48,6 +48,27 @@ proc `[]=`*[T](dq: var RingDeque[T]; i: int; v: T) =
     n = n.next
   n.value = v
 
+proc `[]`*[T](dq: RingDeque[T]; i: BackwardsIndex): T =
+  var n = dq.data.head
+  let moves = i.int mod dq.length
+  for _ in 0..<moves:
+    n = n.prev
+  n.value
+
+proc `[]`*[T](dq: var RingDeque[T]; i: BackwardsIndex): T =
+  var n = dq.data.head
+  let moves = i.int mod dq.length
+  for _ in 0..<moves:
+    n = n.prev
+  n.value
+
+proc `[]=`*[T](dq: var RingDeque[T]; i: BackwardsIndex; v: T) =
+  var n = dq.data.head
+  let moves = i.int mod dq.length
+  for _ in 0..<moves:
+    n = n.prev
+  n.value = v
+
 proc rotate*[T](dq: var RingDeque[T]; r = 1) =
   ## Positive = right rotation = counter clock-wise
   ## Negative = left rotation = clock-wise
