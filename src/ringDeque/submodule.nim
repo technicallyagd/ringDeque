@@ -3,54 +3,55 @@ type
   RingDeque*[T] = object
     data: DoublyLinkedRing[T]
     length: int
-    cursor: DoublyLinkedNode[T]
 
 proc `$`*[T](dq: RingDeque[T]): string =
   ## turns a list into its string representation.
-  result = "["
-  var n = dq.cursor
-  for _ in 0..<dq.length:
-    if result.len > 1: result.add(", ")
-    result.addQuoted(n.value)
-    n = n.next
-  result.add("]")
+  $dq.data
 
 
 proc newDeque*[T](): RingDeque[T] =
-  result.cursor = result.data.head
-
+  result
 
 proc newDeque*[T](initialData: openArray[T]): RingDeque[T] =
   for d in initialData:
     result.data.append(d)
     result.length += 1
-  result.cursor = result.data.head
 
 proc append*[T](dq: var RingDeque[T]; v: T) =
-  var newNode = newDoublyLinkedNode(v)
-  var tail = dq.cursor.prev
-  newNode.prev = tail
-  newNode.next = dq.cursor
-  dq.cursor.prev = newNode
-  tail.next = newNode
+  dq.data.append(v)
+  dq.length += 1
+
+proc prepend*[T](dq: var RingDeque[T]; v: T) =
+  dq.data.prepend(v)
+  dq.length += 1
 
 proc len*(dq: RingDeque): int =
   dq.length
 
 proc `[]`*[T](dq: RingDeque[T]; i: int): T =
-  var n = dq.cursor
+  var n = dq.data.head
   let moves = i mod dq.length
   for _ in 0..<moves:
     n = n.next
   n.value
 
+proc `[]=`*[T](dq: var RingDeque[T]; i: int; v: T) =
+  var n = dq.data.head
+  let moves = i mod dq.length
+  for _ in 0..<moves:
+    n = n.next
+  n.value = v
+
 proc rotate*[T](dq: var RingDeque[T]; r: int) =
-  var n = dq.cursor
+  ## Positive = right rotation = counter clock-wise
+  ## Negative = left rotation = clock-wise
+  var n = dq.data.head
+  var rot = r mod dq.length
   if r > 0:
     for _ in 0..<rot:
-      n = n.next
+      n = n.prev
   else:
     for _ in 0..<(-rot):
-      n = n.prev
-  dq.cursor = n
+      n = n.next
+  dq.data.head = n
 
