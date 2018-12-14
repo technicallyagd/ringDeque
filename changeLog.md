@@ -1,5 +1,9 @@
 # Change Log
 
+## v0.3.0
+
+- Adds utility routine, `proc step(node: var DoublyLinkedNode; n = 1)` that helps with manipulating multiple cursors from a single deque.
+
 ## v0.2.0
 
 - `remove` now remove the first node it finds that matches the given value. `removeNode` removes the provided node.

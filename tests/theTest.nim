@@ -9,6 +9,8 @@ import unittest
 
 import ringDeque
 
+
+
 suite "newDeque":
   test "should create new empty RingDeque while no argument passed":
     let q = newDeque[bool]()
@@ -199,3 +201,31 @@ suite "count":
     check q.count(2) == 3
     check q.count(4) == 2
     check q.count(99) == 0
+
+suite "step for DoublyLinkedNode":
+  setup:
+    var q = newDeque([1, 2, 3, 4, 5])
+
+  test "should move forward n times for n > 0":
+    var node = q.headNode
+    check node.value == 1
+    node.step(2)
+    check node.value == 3
+    node.step(4)
+    check node.value == 2
+
+  test "should move backward n times for n < 0":
+    var node = q.headNode
+    check node.value == 1
+    node.step(-2)
+    check node.value == 4
+    node.step(-4)
+    check node.value == 5
+
+  test "should not affect the original deque":
+    var node = q.headNode
+    check node.value == 1
+    node.step(2)
+    check node.value == 3
+    check $q == "[1, 2, 3, 4, 5]"
+    check q.head == 1

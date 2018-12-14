@@ -1,4 +1,14 @@
 import lists
+
+## Utility proc for moving DoublyLinkedNode itself
+func step*(node: var DoublyLinkedNode; nSteps = 1) =
+  if nSteps > 0:
+    for _ in 1..nSteps:
+      node = node.next
+  else:
+    for _ in 1..(-nSteps):
+      node = node.prev
+
 type
   RingDeque*[T] = object
     data: DoublyLinkedRing[T]

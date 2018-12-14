@@ -72,6 +72,14 @@ except ValueError:
 dq.extendLeft("abc")          # extendLeft() reverses the input order
 echo dq                       # ['c', 'b', 'a']
 
+# Utility proc step(node: var DoublyLinkedNode; n = 1)
+# Helps with manipulating multiple cursors from a single deque.
+var nodeA = dq.headNode
+var nodeB = dq.headNode
+nodeA.step(2)                 # step(n) to moves nodeA forward n times
+echo nodeA.value              # a
+nodeB.step(-2)                # step(-n) to moves nodeB backward n times
+echo nodeA.value              # b
 ```
 
 Please take a look at [theTest.nim](tests/theTest.nim) for more supported usages.
